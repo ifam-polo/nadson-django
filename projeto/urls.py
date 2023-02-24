@@ -22,8 +22,12 @@ def my_view(request):
     return HttpResponse('A humanindade vai se destruir!')
 
 
+def minha_olhada(request):
+    return HttpResponse('Se você está lendo dessa mensagem é porque você fez tudo certinho!!Parabéns!!')
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('sobre/', my_view),
+    path('veja/', minha_olhada),
 
 ]
