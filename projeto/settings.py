@@ -122,6 +122,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'base_static',
 ]
+
 # caminho da pasta onde todos os arquvios estáticos da aplicação estão salvos.
 STATIC_ROOT = BASE_DIR / 'static'
 
