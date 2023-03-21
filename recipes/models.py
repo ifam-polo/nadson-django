@@ -2,7 +2,7 @@ from django.contrib.auth.models import User  # importação do usuário do djang
 from django.db import models
 
 
-# criação da classe categoria.
+# criação da classe categoria. Registro dos models.
 class Category(models.Model):
     name = models.CharField(max_length=65)
 
@@ -32,3 +32,6 @@ class Recipe(models.Model):
     author = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True
     )
+
+    def __str__(self):
+        return self.title

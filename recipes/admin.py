@@ -1,11 +1,16 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Category
+from .models import Category, Recipe
 
 
-# classe categoria criada para a classe administrativa do model.Ela herda da classe ModelAdmin.
+# classe catego. criada para a classe adminis. do model. herda da clss modeladm.
 class CategoryAdmin(admin.ModelAdmin):
+    ...
+
+
+@admin.register(Recipe)
+class RecipeAdmin(admin.ModelAdmin):
     ...
 
 
