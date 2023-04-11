@@ -4,7 +4,7 @@ from django.contrib import admin
 from .models import Category, Recipe
 
 
-# classe catego. criada para a classe adminis. do model. herda da clss modeladm.
+# classe catego. criada para a classe adminis. do model. herda da clss modeladm. # noqa:E501
 class CategoryAdmin(admin.ModelAdmin):
     ...
 
