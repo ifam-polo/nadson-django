@@ -30,9 +30,7 @@ def category(request, category_id):
             is_published=True,
         ).order_by('-id')
     )
-
     page_obj, pagination_range = make_pagination(request, recipes, PER_PAGE)
-
     return render(request, 'recipes/pages/category.html', context={
         'recipes': page_obj,
         'pagination_range': pagination_range,
@@ -59,9 +57,7 @@ def search(request):
         ),
         is_published=True
     ).order_by('-id')
-
     page_obj, pagination_range = make_pagination(request, recipes, PER_PAGE)
-
     return render(request, 'recipes/pages/search.html', {
         'page_title': f'Search for "{search_term}" |',
         'search_term': search_term,
