@@ -10,14 +10,18 @@ class AuthorLogoutTest(TestCase):
 
         response = self.client.get(reverse("authors:logout"), follow=True)
 
-        self.assertIn("Invalid logout request", response.content.decode("utf-8"))
+        self.assertIn(
+            "Invalid logout request", response.content.decode("utf-8")
+        )  # noqa: E501
 
     def test_user_tries_to_logout_another_user(self):
         User.objects.create_user(username="my_user", password="my_pass")
         self.client.login(username="my_user", password="my_pass")
 
         response = self.client.post(
-            reverse("authors:logout"), data={"username": "another_user"}, follow=True
+            reverse("authors:logout"),
+            data={"username": "another_user"},
+            follow=True,  # noqa: E501
         )
 
         self.assertIn("Invalid logout user", response.content.decode("utf-8"))
@@ -27,7 +31,11 @@ class AuthorLogoutTest(TestCase):
         self.client.login(username="my_user", password="my_pass")
 
         response = self.client.post(
-            reverse("authors:logout"), data={"username": "my_user"}, follow=True
+            reverse("authors:logout"),
+            data={"username": "my_user"},
+            follow=True,  # noqa: E501
         )
 
-        self.assertIn("Logged out successfully", response.content.decode("utf-8"))
+        self.assertIn(
+            "Logged out successfully", response.content.decode("utf-8")
+        )  # noqa: E501
