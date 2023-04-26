@@ -5,6 +5,8 @@ from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
+from recipes.models import Recipe
+
 from .forms import LoginForm, RegisterForm
 
 
@@ -50,7 +52,6 @@ def login_create(request):
     if not request.POST:
         raise Http404()
     form = LoginForm(request.POST)
-    login_url = reverse("authors:login")
     if form.is_valid():
         authenticated_user = authenticate(
             username=form.cleaned_data.get("username", ""),
@@ -63,7 +64,7 @@ def login_create(request):
             messages.error(request, "Invalid credentials")
     else:
         messages.error(request, "Invalid username or password")
-    return redirect(login_url)
+    return redirect(reverse("authors:dashboard"))
 
 
 @login_required(login_url="authors:login", redirect_field_name="next")
@@ -71,11 +72,35 @@ def logout_view(request):
     if not request.POST:
         messages.error(request, "Invalid logout request")
         return redirect(reverse("authors:login"))
-
     if request.POST.get("username") != request.user.username:
         messages.error(request, "Invalid logout user")
         return redirect(reverse("authors:login"))
-
     messages.success(request, "Logged out successfully")
     logout(request)
     return redirect(reverse("authors:login"))
+
+
+@login_required(login_url="authors:login", redirect_field_name="next")
+def dashboard(request):
+    recipes = Recipe.objects.filter(is_published=False, author=request.user)
+    return render(
+        request,
+        "authors/pages/dashboard.html",
+        context={
+            "recipes": recipes,
+        },
+    )
+
+
+@login_required(login_url="authors:login", redirect_field_name="next")
+def dashboard_recipe_edit(request, id):
+    recipe = Recipe.objects.filter(
+        is_published=False,
+        author=request.user,
+        pk=id,
+    )
+
+    if not recipe:
+        raise Http404()
+
+    return render(request, "authors/pages/dashboard_recipe.html", context={})
