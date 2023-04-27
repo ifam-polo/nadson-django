@@ -57,6 +57,16 @@ h5,
 h6 {
   font-family: var(--font-headings);
 }
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
 .container {
   max-width: 144rem;
   margin: 0 auto;
@@ -275,7 +285,9 @@ h6 {
 .errorlist {
   color: var(--color-error-dark);
 }
-.form-content input {
+.form-content input,
+.form-content textarea,
+.form-content select {
   width: 100%;
   padding: 1rem;
   border-radius: 0.4rem;
@@ -294,6 +306,9 @@ h6 {
 }
 .inline-form {
   display: inline;
+}
+.span-2 {
+  grid-column: span 2;
 }
 .plaintext-button {
   display: inline;
@@ -350,25 +365,24 @@ h6 {
 .login-message {
   margin: 1rem 0;
 }
-
 .authors-dashboard-container {
   max-width: 64rem;
   text-align: left;
   padding: var(--spacing-gutter-medium);
   margin: 0 auto;
 }
-
 .authors-dashboard-container h3,
 .authors-dashboard-container p,
 .authors-dashboard-container ul {
   list-style-type: none;
   margin: 1rem 0;
 }
-
 /* Generics */
-
 .center {
   text-align: center;
+}
+.left {
+  text-align: left;
 }
 .m-x {
   margin: 0 var(--spacing-gutter-medium);
