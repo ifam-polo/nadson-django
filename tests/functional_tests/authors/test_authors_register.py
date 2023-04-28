@@ -14,9 +14,12 @@ class AuthorsRegisterTest(AuthorsBaseTest):
                 field.send_keys(" " * 20)
 
     def get_form(self):
-        return self.browser.find_element(By.XPATH, "/html/body/main/div[2]/form")
+        return self.browser.find_element(
+            By.XPATH, "/html/body/main/div[2]/form"
+        )  # noqa: E501
 
     def form_field_test_with_callback(self, callback):
+        # source skip: use-string-for-concatenation
         self.browser.get(self.live_server_url + "/authors/register/")
         form = self.get_form()
         self.fill_form_dummy_data(form)
@@ -77,14 +80,20 @@ class AuthorsRegisterTest(AuthorsBaseTest):
         self.form_field_test_with_callback(callback)
 
     def test_user_valid_data_register_successfully(self):
-        self.browser.get(self.live_server_url + "/authors/register/")
+        self.browser.get(self.live_server_url + "/authors/register/")  # noqa: E501
         form = self.get_form()
         self.get_by_placeholder(form, "Ex.: John").send_keys("First Name")
         self.get_by_placeholder(form, "Ex.: Doe").send_keys("Last Name")
         self.get_by_placeholder(form, "Your username").send_keys("my_username")
-        self.get_by_placeholder(form, "Your e-mail").send_keys("email@valid.com")
-        self.get_by_placeholder(form, "Type your password").send_keys("P@ssw0rd1")
-        self.get_by_placeholder(form, "Repeat your password").send_keys("P@ssw0rd1")
+        self.get_by_placeholder(form, "Your e-mail").send_keys(
+            "email@valid.com"
+        )  # noqa: E501
+        self.get_by_placeholder(form, "Type your password").send_keys(
+            "P@ssw0rd1"
+        )  # noqa: E501
+        self.get_by_placeholder(form, "Repeat your password").send_keys(
+            "P@ssw0rd1"
+        )  # noqa: E501
         form.submit()
         self.assertIn(
             "Your user is created, please log in.",

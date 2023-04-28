@@ -106,7 +106,6 @@ def dashboard_recipe_edit(request, id):
         data=request.POST or None, files=request.FILES or None, instance=recipe
     )
     if form.is_valid():
-        # Agora, o form é válido e eu posso tentar salvar
         recipe = form.save(commit=False)
         recipe.author = request.user
         recipe.preparation_steps_is_html = False
@@ -132,11 +131,16 @@ def dashboard_recipe_new(request):
         recipe.is_published = False
         recipe.save()
         messages.success(request, "Salvo com sucesso!")
-        return redirect(reverse("authors:dashboard_recipe_edit", args=(recipe.id,)))
+        return redirect(
+            reverse("authors:dashboard_recipe_edit", args=(recipe.id,))
+        )  # noqa: E501
     return render(
         request,
         "authors/pages/dashboard_recipe.html",
-        context={"form": form, "form_action": reverse("authors:dashboard_recipe_new")},
+        context={
+            "form": form,
+            "form_action": reverse("authors:dashboard_recipe_new"),
+        },  # noqa: E501
     )
 
 

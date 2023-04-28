@@ -44,8 +44,12 @@ class RecipeHomePageFunctionalTest(RecipeBaseFunctionalTest):
         self.browser.get(self.live_server_url)
 
         # Vê que tem uma paginação e clica na página 2
-        page2 = self.browser.find_element(By.XPATH, '//a[@aria-label="Go to page 2"]')
+        page2 = self.browser.find_element(
+            By.XPATH, '//a[@aria-label="Go to page 2"]'
+        )  # noqa: E501
         page2.click()
 
         # Vê que tem mais 2 receitas na página 2
-        self.assertEqual(len(self.browser.find_elements(By.CLASS_NAME, "recipe")), 2)
+        self.assertEqual(
+            len(self.browser.find_elements(By.CLASS_NAME, "recipe")), 2
+        )  # noqa: E501
