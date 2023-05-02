@@ -13,7 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf import settings  # Possibilita importações do arquivo settings.
+from django.conf import (
+    settings,
+)  # Possibility importations do file. settings.# noqa: E501
 from django.conf.urls.static import (
     static,
 )  # para poder config. os arqu. staticos nas urls.

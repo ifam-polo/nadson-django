@@ -1,10 +1,9 @@
 from unittest.mock import patch
 
 from django.urls import resolve, reverse
+from test_recipe_base import RecipeTestBase
 
 from recipes import views
-
-from .test_recipe_base import RecipeTestBase
 
 
 class RecipeHomeViewTest(RecipeTestBase):
@@ -23,7 +22,8 @@ class RecipeHomeViewTest(RecipeTestBase):
     def test_recipe_home_template_shows_no_recipes_found_if_no_recipes(self):
         response = self.client.get(reverse("recipes:home"))
         self.assertIn(
-            "<h1>No recipes found here 🥲</h1>", response.content.decode("utf-8")
+            "<h1>No recipes found here 🥲</h1>",
+            response.content.decode("utf-8"),  # noqa: E501
         )
 
     def test_recipe_home_template_loads_recipes(self):
@@ -43,7 +43,8 @@ class RecipeHomeViewTest(RecipeTestBase):
         response = self.client.get(reverse("recipes:home"))
         # Check if one recipe exists
         self.assertIn(
-            "<h1>No recipes found here 🥲</h1>", response.content.decode("utf-8")
+            "<h1>No recipes found here 🥲</h1>",
+            response.content.decode("utf-8"),  # noqa: E501
         )
 
     def test_recipe_home_is_paginated(self):

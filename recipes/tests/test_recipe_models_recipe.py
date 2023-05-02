@@ -1,7 +1,6 @@
 from django.core.exceptions import ValidationError
 from parameterized import parameterized
-
-from .test_recipe_base import Recipe, RecipeTestBase
+from test_recipe_base import Recipe, RecipeTestBase
 
 
 class RecipeModelTest(RecipeTestBase):
@@ -11,29 +10,31 @@ class RecipeModelTest(RecipeTestBase):
 
     def make_recipe_no_defaults(self):
         recipe = Recipe(
-            category=self.make_category(name='Test Default Category'),
-            author=self.make_author(username='newuser'),
-            title='Recipe Title',
-            description='Recipe Description',
-            slug='recipe-slug-for-no-defaults',
+            category=self.make_category(name="Test Default Category"),
+            author=self.make_author(username="newuser"),
+            title="Recipe Title",
+            description="Recipe Description",
+            slug="recipe-slug-for-no-defaults",
             preparation_time=10,
-            preparation_time_unit='Minutos',
+            preparation_time_unit="Minutos",
             servings=5,
-            servings_unit='Porções',
-            preparation_steps='Recipe Preparation Steps',
+            servings_unit="Porções",
+            preparation_steps="Recipe Preparation Steps",
         )
         recipe.full_clean()
         recipe.save()
         return recipe
 
-    @parameterized.expand([
-        ('title', 65),
-        ('description', 165),
-        ('preparation_time_unit', 65),
-        ('servings_unit', 65),
-    ])
+    @parameterized.expand(
+        [
+            ("title", 65),
+            ("description", 165),
+            ("preparation_time_unit", 65),
+            ("servings_unit", 65),
+        ]
+    )
     def test_recipe_fields_max_length(self, field, max_length):
-        setattr(self.recipe, field, 'A' * (max_length + 1))
+        setattr(self.recipe, field, "A" * (max_length + 1))
         with self.assertRaises(ValidationError):
             self.recipe.full_clean()
 
@@ -41,12 +42,12 @@ class RecipeModelTest(RecipeTestBase):
         recipe = self.make_recipe_no_defaults()
         self.assertFalse(
             recipe.preparation_steps_is_html,
-            msg='Recipe preparation_steps_is_html is not False',
+            msg="Recipe preparation_steps_is_html is not False",
         )
 
     def test_recipe_is_published_is_false_by_default(self):
         recipe = self.make_recipe_no_defaults()
         self.assertFalse(
             recipe.is_published,
-            msg='Recipe is_published is not False',
+            msg="Recipe is_published is not False",
         )

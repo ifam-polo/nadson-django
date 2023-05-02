@@ -30,7 +30,8 @@ class RegisterForm(forms.ModelForm):
         max_length=150,
     )
     first_name = forms.CharField(
-        error_messages={"required": "Write your first name"}, label="First name"
+        error_messages={"required": "Write your first name"},
+        label="First name",  # noqa: E501
     )
     last_name = forms.CharField(
         error_messages={"required": "Write your last name"}, label="Last name"
