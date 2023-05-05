@@ -19,7 +19,7 @@ class RegisterForm(forms.ModelForm):
         label="Username",
         help_text=(
             "Username must have letters, numbers or one of those @.+-_. "
-            "The length should be between 4 and 150 characters"
+            "The length should be between 4 and 150 characters."
         ),
         error_messages={
             "required": "This field must not be empty",
@@ -39,7 +39,7 @@ class RegisterForm(forms.ModelForm):
     email = forms.EmailField(
         error_messages={"required": "E-mail is required"},
         label="E-mail",
-        help_text="The e-mail must be valid",
+        help_text="The e-mail must be valid.",
     )
     password = forms.CharField(
         required=True,
