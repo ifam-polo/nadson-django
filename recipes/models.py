@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.urls import reverse
-from django.utils.text import slugify
+from django.urls import reverse  # noqa: F401
+from django.utils.text import slugify  # noqa: F401
 
 
 # criação da classe categoria. Registro dos models.
@@ -39,4 +39,4 @@ class Recipe(models.Model):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
-        return self.title  # Mostra o título da receita.
+        return self.title  # Apresenta título da receita.
