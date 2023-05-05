@@ -22,7 +22,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "INSECURE")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "1") == "1"
-ALLOWED_HOSTS: list[str] = []
+ALLOWED_HOSTS= []
 
 # Application definition
 INSTALLED_APPS = [
@@ -51,6 +51,7 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
             BASE_DIR / "base_templates",
+            BASE_DIR / 'recipes/css/style.css',
         ],
         "APP_DIRS": True,
         "OPTIONS": {
