@@ -1,4 +1,4 @@
-import os
+import os  # aula 163
 from pathlib import Path
 from time import sleep
 
@@ -11,6 +11,7 @@ CHROMEDRIVER_PATH = ROOT_PATH / "bin" / CHROMEDRIVER_NAME
 
 
 def make_chrome_browser(*options):
+    # sourcery skip: inline-immediately-returned-variable
     chrome_options = webdriver.ChromeOptions()
     if options is not None:
         for option in options:
