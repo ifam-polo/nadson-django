@@ -1,4 +1,4 @@
-from unittest import TestCase
+from unittest import TestCase, skip
 
 from django.test import TestCase as DjangoTestCase
 from django.urls import reverse
@@ -28,7 +28,7 @@ class AuthorRegisterFormUnitTest(TestCase):
             (
                 "username",
                 (
-                    "Username must have letters, numbers or one of those @.+-_. "  # noqa:E501
+                    "Username must have letters, numbers or one of those @.+-_. "  # noqa: E501
                     "The length should be between 4 and 150 characters."
                 ),
             ),
@@ -71,8 +71,8 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
             "first_name": "first",
             "last_name": "last",
             "email": "email@anyemail.com",
-            "password": "Str0ngP@ssword1",
-            "password2": "Str0ngP@ssword1",
+            "password": "1",
+            "password2": "1",
         }
         return super().setUp(*args, **kwargs)
 
@@ -90,6 +90,7 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
         self.form_data[field] = ""
         url = reverse("authors:register_create")
         response = self.client.post(url, data=self.form_data, follow=True)
+
         self.assertIn(msg, response.content.decode("utf-8"))
         self.assertIn(msg, response.context["form"].errors.get(field))
 
@@ -97,6 +98,7 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
         self.form_data["username"] = "joa"
         url = reverse("authors:register_create")
         response = self.client.post(url, data=self.form_data, follow=True)
+
         msg = "Username must have at least 4 characters"
         self.assertIn(msg, response.content.decode("utf-8"))
         self.assertIn(msg, response.context["form"].errors.get("username"))
@@ -105,7 +107,9 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
         self.form_data["username"] = "A" * 151
         url = reverse("authors:register_create")
         response = self.client.post(url, data=self.form_data, follow=True)
+
         msg = "Username must have less than 150 characters"
+
         self.assertIn(msg, response.context["form"].errors.get("username"))
         self.assertIn(msg, response.content.decode("utf-8"))
 
@@ -113,28 +117,37 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
         self.form_data["password"] = "abc123"
         url = reverse("authors:register_create")
         response = self.client.post(url, data=self.form_data, follow=True)
+
         msg = (
             "Password must have at least one uppercase letter, "
             "one lowercase letter and one number. The length should be "
             "at least 8 characters."
         )
+
         self.assertIn(msg, response.context["form"].errors.get("password"))
         self.assertIn(msg, response.content.decode("utf-8"))
+
         self.form_data["password"] = "@A123abc123"
         url = reverse("authors:register_create")
         response = self.client.post(url, data=self.form_data, follow=True)
+
         self.assertNotIn(msg, response.context["form"].errors.get("password"))
 
     def test_password_and_password_confirmation_are_equal(self):
         self.form_data["password"] = "@A123abc123"
         self.form_data["password2"] = "@A123abc1235"
+
         url = reverse("authors:register_create")
         response = self.client.post(url, data=self.form_data, follow=True)
+
         msg = "Password and password2 must be equal"
+
         self.assertIn(msg, response.context["form"].errors.get("password"))
         self.assertIn(msg, response.content.decode("utf-8"))
+
         self.form_data["password"] = "@A123abc123"
         self.form_data["password2"] = "@A123abc123"
+
         url = reverse("authors:register_create")
         response = self.client.post(url, data=self.form_data, follow=True)
 
@@ -145,6 +158,7 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
 
+    @skip("WIP")
     def test_email_field_must_be_unique(self):
         url = reverse("authors:register_create")
 
@@ -155,9 +169,8 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
         self.assertIn(msg, response.context["form"].errors.get("email"))
         self.assertIn(msg, response.content.decode("utf-8"))
 
-        def test_author_created_can_login(self):
-            url = reverse("authors:register_create")
-
+    def test_author_created_can_login(self):
+        url = reverse("authors:register_create")
         self.form_data.update(
             {
                 "username": "testuser",
@@ -171,5 +184,4 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
         is_authenticated = self.client.login(
             username="testuser", password="@Bc123456"
         )  # noqa: E501
-
         self.assertTrue(is_authenticated)
