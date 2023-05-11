@@ -131,16 +131,11 @@ def dashboard_recipe_new(request):
         recipe.is_published = False
         recipe.save()
         messages.success(request, "Salvo com sucesso!")
-        return redirect(
-            reverse("authors:dashboard_recipe_edit", args=(recipe.id,))
-        )  # noqa: E501
+        return redirect(reverse("authors:dashboard_recipe_edit", args=(recipe.id,)))
     return render(
         request,
         "authors/pages/dashboard_recipe.html",
-        context={
-            "form": form,
-            "form_action": reverse("authors:dashboard_recipe_new"),
-        },  # noqa: E501
+        context={"form": form, "form_action": reverse("authors:dashboard_recipe_new")},
     )
 
 
