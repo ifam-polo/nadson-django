@@ -1,4 +1,3 @@
-# flake8: noqa
 from django.urls import path
 
 from . import views
@@ -12,11 +11,13 @@ urlpatterns = [
     path("logout/", views.logout_view, name="logout"),
     path("dashboard/", views.dashboard, name="dashboard"),
     path(
-        "dashboard/recipe/new/", views.dashboard_recipe_new, name="dashboard_recipe_new"
+        "dashboard/recipe/new/",
+        views.DashboardRecipe.as_view(),
+        name="dashboard_recipe_new",
     ),
     path(
         "dashboard/recipe/delete/",
-        views.dashboard_recipe_delete,
+        views.DashboardRecipeDelete.as_view(),
         name="dashboard_recipe_delete",
     ),
     path(
