@@ -62,7 +62,7 @@ class Recipe(models.Model):
         default=None,
     )
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, blank=True, default="")
 
     def __str__(self):
         return self.title
@@ -74,17 +74,13 @@ class Recipe(models.Model):
         if not self.slug:
             slug = f"{slugify(self.title)}"
             self.slug = slug
-
         return super().save(*args, **kwargs)
 
     def clean(self, *args, **kwargs):
         error_messages = defaultdict(list)
-
         recipe_from_db = Recipe.objects.filter(title__iexact=self.title).first()
-
         if recipe_from_db:
             if recipe_from_db.pk != self.pk:
                 error_messages["title"].append("Found recipes with the same title")
-
         if error_messages:
             raise ValidationError(error_messages)
