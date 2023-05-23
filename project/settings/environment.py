@@ -14,7 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY", "INSECURE")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True if os.environ.get("DEBUG") == "1" else False
+DEBUG = os.environ.get("DEBUG") == "1"
 
 ALLOWED_HOSTS: list[str] = parse_comma_sep_str_to_list(get_env_variable("ALLOWED_HOST"))
 CSRF_TRUSTED_ORIGINS: list[str] = parse_comma_sep_str_to_list(
