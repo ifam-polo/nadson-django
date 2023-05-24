@@ -1,11 +1,9 @@
 # flake8: noqa
 
 from django.urls import path
-
 from recipes import views
 
 app_name = "recipes"
-
 urlpatterns = [
     path("", views.RecipeListViewHome.as_view(), name="home"),
     path("recipes/search/", views.RecipeListViewSearch.as_view(), name="search"),
@@ -31,5 +29,14 @@ urlpatterns = [
         views.theory,
         name="theory",
     ),
-    path("recipes/api/v2/", views.recipe_api_list, name="recipes_api_v2"),
+    path(
+        "recipes/api/v2/",
+        views.recipe_api_list,
+        name="recipes_api_v2",
+    ),
+    path(
+        "recipes/api/v2/<int:pk>/",
+        views.recipe_api_detail,
+        name="recipes_api_v2_detail",
+    ),
 ]
