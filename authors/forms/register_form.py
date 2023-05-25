@@ -1,3 +1,5 @@
+# flake8: noqa
+
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -23,15 +25,14 @@ class RegisterForm(forms.ModelForm):
         ),
         error_messages={
             "required": "This field must not be empty",
-            "min_length": "Username must have a at least 4 characters",
+            "min_length": "Username must have at least 4 characters",
             "max_length": "Username must have less than 150 characters",
         },
         min_length=4,
         max_length=150,
     )
     first_name = forms.CharField(
-        error_messages={"required": "Write your first name"},
-        label="First name",  # noqa: E501
+        error_messages={"required": "Write your first name"}, label="First name"
     )
     last_name = forms.CharField(
         error_messages={"required": "Write your last name"}, label="Last name"
@@ -42,7 +43,6 @@ class RegisterForm(forms.ModelForm):
         help_text="The e-mail must be valid.",
     )
     password = forms.CharField(
-        required=True,
         widget=forms.PasswordInput(),
         error_messages={"required": "Password must not be empty"},
         help_text=(
@@ -51,11 +51,11 @@ class RegisterForm(forms.ModelForm):
             "at least 8 characters."
         ),
         validators=[strong_password],
+        label="Password",
     )
     password2 = forms.CharField(
-        required=True,
         widget=forms.PasswordInput(),
-        label="password2",
+        label="Password2",
         error_messages={"required": "Please, repeat your password"},
     )
 
@@ -68,6 +68,7 @@ class RegisterForm(forms.ModelForm):
             "email",
             "password",
         ]
+        # exclude = ['first_name']
 
     def clean_email(self):
         email = self.cleaned_data.get("email", "")
@@ -88,6 +89,14 @@ class RegisterForm(forms.ModelForm):
         password2 = cleaned_data.get("password2")
 
         if password != password2:
+            password_confirmation_error = ValidationError(
+                "Password and password2 must be equal", code="invalid"
+            )
             raise ValidationError(
-                {"password": "Password and password2 must be equal"}
-            )  # noqa: E501
+                {
+                    "password": password_confirmation_error,
+                    "password2": [
+                        password_confirmation_error,
+                    ],
+                }
+            )

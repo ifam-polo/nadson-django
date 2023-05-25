@@ -9,8 +9,8 @@ from utils.strings import is_positive_number
 
 
 class AuthorRecipeForm(forms.ModelForm):
-    def __init__(self, *args, **kargs):
-        super().__init__(*args, **kargs)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
         self._my_errors = defaultdict(list)
 
@@ -35,7 +35,6 @@ class AuthorRecipeForm(forms.ModelForm):
                     ("Porções", "Porções"),
                     ("Pedaços", "Pedaços"),
                     ("Pessoas", "Pessoas"),
-                    ("Fatias", "Fatias"),
                 ),
             ),
             "preparation_time_unit": forms.Select(

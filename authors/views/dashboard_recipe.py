@@ -47,7 +47,7 @@ class DashboardRecipe(View):
         form = AuthorRecipeForm(instance=recipe)
         return self.render_recipe(form)
 
-    def post(self, request, id=None):
+    def post(self, request, id=None):  # sourcery skip: extract-method
         recipe = self.get_recipe(id)
         form = AuthorRecipeForm(
             data=request.POST or None, files=request.FILES or None, instance=recipe

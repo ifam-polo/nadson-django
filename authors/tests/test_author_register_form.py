@@ -1,3 +1,5 @@
+# flake8: noqa
+
 from unittest import TestCase, skip
 
 from django.test import TestCase as DjangoTestCase
@@ -28,7 +30,7 @@ class AuthorRegisterFormUnitTest(TestCase):
             (
                 "username",
                 (
-                    "Username must have letters, numbers or one of those @.+-_. "  # noqa: E501
+                    "Username must have letters, numbers or one of those @.+-_. "
                     "The length should be between 4 and 150 characters."
                 ),
             ),
@@ -37,7 +39,7 @@ class AuthorRegisterFormUnitTest(TestCase):
                 "password",
                 (
                     "Password must have at least one uppercase letter, "
-                    "one lowercase letter and one number. The length should be "  # noqa: E501
+                    "one lowercase letter and one number. The length should be "
                     "at least 8 characters."
                 ),
             ),
@@ -181,7 +183,5 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
 
         self.client.post(url, data=self.form_data, follow=True)
 
-        is_authenticated = self.client.login(
-            username="testuser", password="@Bc123456"
-        )  # noqa: E501
+        is_authenticated = self.client.login(username="testuser", password="@Bc123456")
         self.assertTrue(is_authenticated)
